@@ -16,6 +16,8 @@ class CreateEmailWhitelistsTable extends Migration
         Schema::create('email_whitelists', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
+            $table->text('email');
         });
     }
 
