@@ -2,6 +2,8 @@
 
 namespace App\Rules;
 
+use App\DomainWhitelist;
+use App\EmailWhitelist;
 use Illuminate\Contracts\Validation\Rule;
 
 class EmailWhitelisted implements Rule
@@ -25,7 +27,16 @@ class EmailWhitelisted implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
+        // TODO: Probably shouldn't rely on this @ being there
+        $domain = substr($value, strpos($value, '@') + 1);
+
+        if (
+            DomainWhitelist::where('domain', $domain)->exists() ||
+            EmailWhitelist::where('email', $value)->exists()
+        ) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -35,6 +46,6 @@ class EmailWhitelisted implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'We are not currently accepting users with your email at this time.';
     }
 }
