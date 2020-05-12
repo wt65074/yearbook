@@ -5,7 +5,7 @@ import Signup from "./components/Signup";
 
 function Root() {
     return (
-        <div className='w-full h-full'>
+        <div className='w-full h-screen bg-grey1 flex flex-col items-center'>
             <Navbar/>
             <Signup/>
         </div>

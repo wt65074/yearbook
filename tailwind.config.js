@@ -44,11 +44,13 @@ module.exports = {
             lightred: '#FFBCC4',
 
             // greys
+            bg: '#E5E5E5',
             grey1: '#F7F7F7',
             grey2: '#C9C9C9',
             grey3: '#A0A0A0',
             grey4: '#575757',
-            black: '#303030'
+            black: '#303030',
+            white: '#FFFFFF',
         }
     },
     variants: {},
