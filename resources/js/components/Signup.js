@@ -5,7 +5,11 @@ const {useState} = React;
 
 function InputField(props) {
     return (
-        <input type='text' className="shadow-input bg-white rounded p-2 ${props.className}"></input>
+        <div className={props.className}>
+            <input placeholder={props.placeholder} value={props.value} onChange={props.onChange}
+                   className="shadow-input bg-white rounded p-4 w-full"/>
+            {props.error && <p className="text-red text-sm mt-2 px">{props.error}</p>}
+        </div>
     );
 }
 
@@ -40,14 +44,14 @@ function Signup() {
                 <input placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}
                        className="shadow-input bg-white rounded p-4 flex-1"/>
             </div>
-            <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
-                   className="shadow-input bg-white rounded p-4 w-full mb-6"/>
-            {error['email'] && <p className="text-red text-sm">{error['email']}</p>}
+            <InputField placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
+                        className="w-full mb-6" error={error['email']}/>
             <input placeholder="Password" type="password" value={password}
                    onChange={(e) => setPassword(e.target.value)}
                    className="shadow-input bg-white rounded p-4 w-full mb-8"/>
             <button className="rounded bg-blue py-2 px-6 text-white mb-2" onClick={onSubmit}>Sign Up</button>
-            <p className="text-sm text-grey4"> Already have an account? <a className="text-blue" href='#'>Sign in.</a></p>
+            <p className="text-sm text-grey4"> Already have an account? <a className="text-blue" href='#'>Sign in.</a>
+            </p>
 
         </div>
     );
