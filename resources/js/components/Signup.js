@@ -8,7 +8,7 @@ function InputField(props) {
         <div className={props.className}>
             <input placeholder={props.placeholder} value={props.value} onChange={props.onChange}
                    className="shadow-input bg-white rounded p-4 w-full"/>
-            {props.error && <p className="text-red text-sm mt-2 px">{props.error}</p>}
+            {props.error && <p className="text-red text-sm mt-2 px-2">{props.error}</p>}
         </div>
     );
 }
@@ -39,16 +39,15 @@ function Signup() {
                 <h1 className='text-sm text-grey4'>Sign up here.</h1>
             </div>
             <div className="flex w-full justify-between mb-6">
-                <input placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)}
-                       className="shadow-input bg-white rounded p-4 flex-1 mr-6"/>
-                <input placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}
-                       className="shadow-input bg-white rounded p-4 flex-1"/>
+                <InputField placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)}
+                            className="w-full flex-1 mr-3" error={error['name']}/>
+                <InputField placeholder="Last Name" value={firstName} onChange={(e) => setLastName(e.target.value)}
+                            className="w-full flex-1 ml-3" error={error['name']}/>
             </div>
             <InputField placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
                         className="w-full mb-6" error={error['email']}/>
-            <input placeholder="Password" type="password" value={password}
-                   onChange={(e) => setPassword(e.target.value)}
-                   className="shadow-input bg-white rounded p-4 w-full mb-8"/>
+            <InputField placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}
+                        className="w-full mb-6" error={error['password']}/>
             <button className="rounded bg-blue py-2 px-6 text-white mb-2" onClick={onSubmit}>Sign Up</button>
             <p className="text-sm text-grey4"> Already have an account? <a className="text-blue" href='#'>Sign in.</a>
             </p>
