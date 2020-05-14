@@ -11,6 +11,7 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -25,13 +26,33 @@ class AuthController extends Controller
         return new Response('This is the response content', 201);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws ValidationException
+     */
     public function login(Request $request)
     {
+        $this->validateLogin($request);
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
+        // TODO: Throttle login attempts
+
+        if (Auth::guard()->attempt($credentials)) {
+            Log::debug('Attempt successful');
             return response()->json(['user' => Auth::user()]);
+        } else {
+            throw ValidationException::withMessages([
+                'credentials' => 'These credentials do not match our records',
+            ]);
         }
+    }
+
+    protected function validateLogin(Request $request) {
+        $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string',
+        ]);
     }
 
     public function validator(array $data) {
@@ -46,8 +67,8 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'first_name' => $data['firstName'],
-            'last_name' => $data['lastName'],
+            'firstName' => $data['firstName'],
+            'lastName' => $data['lastName'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

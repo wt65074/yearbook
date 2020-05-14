@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from './components/Navbar.js'
-import Signup from "./components/Signup";
+import Navbar from './components/Navbar'
+import SignUp from "./components/SignUp";
+import Landing from "./components/Landing";
+import SignIn from "./components/SignIn";
+
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
 } from "react-router-dom";
 
 function Root() {
@@ -16,7 +18,13 @@ function Root() {
                 <Navbar/>
                 <Switch>
                     <Route path='/signup'>
-                        <Signup/>
+                        <SignUp/>
+                    </Route>
+                    <Route path="/signin">
+                        <SignIn />
+                    </Route>
+                    <Route path="/">
+                        <Landing/>
                     </Route>
                 </Switch>
             </div>
