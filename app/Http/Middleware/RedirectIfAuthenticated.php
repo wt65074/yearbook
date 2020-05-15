@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class RedirectIfAuthenticated
 {
@@ -18,7 +19,9 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        Log::debug("Check failed");
         if (Auth::guard($guard)->check()) {
+            Log::debug("Check passed");
             return redirect(RouteServiceProvider::HOME);
         }
 

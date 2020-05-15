@@ -1,32 +1,35 @@
 import React from 'react';
 import axios from 'axios';
 import StyledInput from "./StyledInput";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 const {useState} = React;
 
 function SignIn(props) {
-    console.log("Sign In");
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState({});
+    const [redirect, setRedirect] = useState(false);
 
     const onSubmit = (event) => {
         event.preventDefault();
-        axios.put('api/user/login', {email, password})
+        axios.post('/login', {email, password})
             .then(res => {
                 console.log("Res: ");
                 console.log(res);
+                setRedirect(true);
             })
             .catch(err => {
                 console.log("Err: ");
                 console.log(err.response);
-                setError(err.response.data.errors)
+                setError(err.response.data.errors);
             })
     };
 
     return (
         <div className='flex flex-col items-center h-full justify-center w-1/2'>
+            {redirect && <Redirect to='/home'/>}
+            {redirect && <p>Redir</p>}
             <div className='mb-8 flex flex-col items-center'>
                 <h1 className='text-2xl font-extrabold text-grey4'>Welcome To Yearbook</h1>
                 <h1 className='text-sm text-grey4 mb-6'>Log in with your Stanford email here.</h1>
@@ -46,7 +49,7 @@ function SignIn(props) {
             <p className="text-sm text-grey4"> Don't have an account? <Link className="text-blue" to='/signup'>Sign
                 Up</Link>
             </p>
-            <Link to='/forgotpassword' className="text-sm text-blue">Forgot Password?</Link>
+            <Link to='/password/reset' className="text-sm text-blue">Forgot Password?</Link>
         </div>
     )
 }
