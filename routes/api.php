@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::put('/user/create', 'AuthController@register')->middleware('api');
-Route::put('/user/login', 'AuthController@login')->middleware('api');
+Route::middleware('auth')->get('/user', function (Request $request) {
+    return Auth::user();
+});
+

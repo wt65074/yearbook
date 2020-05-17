@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
 /*
@@ -12,11 +13,14 @@ use Illuminate\Support\Facades\Log;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Auth::routes(['verify' => true]);
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::get('/home', function () {
     return view('welcome');
-})->middleware('verified');
+})->middleware(['auth', 'verified']);
 
-Route::get('/{any}', function () {
-    return view('welcome');
-})->where('any', '.*');

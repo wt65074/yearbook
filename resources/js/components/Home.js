@@ -26,10 +26,6 @@ function Home() {
 
             </div>
             <div className='flex flex-col items-end w-1/2 mx-12 mt-4 justify-center'>
-                <img src='./images/landing.png'/>
-                <a href='/signup'>
-                    <button className="rounded bg-blue py-2 my-6 px-6 text-white mb-4 shadow-button">Sign Up</button>
-                </a>
 
             </div>
         </div>

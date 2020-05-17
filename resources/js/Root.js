@@ -14,30 +14,44 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
+import axios from "axios";
+
+const {useEffect, useState} = React;
 
 function Root() {
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+        console.log("use")
+        axios.get('/api/user')
+            .then(res => {
+                console.log("Res: ");
+                console.log(res);
+                setUser(res.data)
+            })
+            .catch(err => {
+                console.log("Err: ");
+            })
+    }, []);
     return (
         <Router>
             <div className='w-full h-screen bg-grey1 flex flex-col items-center'>
-                <Navbar/>
+                <Navbar user={user}/>
                 <Switch>
                     <Route path='/register'>
                         <SignUp/>
                     </Route>
                     <Route path="/login">
-                        <SignIn />
+                        <SignIn/>
                     </Route>
                     <Route path="/email/verify">
                         <VerifyEmail/>
                     </Route>
-                    <Route path="/password/reset/:token">
-                        <ResetPassword/>
-                    </Route>
+                    <Route path="/password/reset/:token" component={ResetPassword}/>
                     <Route path="/password/reset">
                         <ForgotPassword/>
                     </Route>
                     <Route path="/home">
-                        <Home />
+                        <Home/>
                     </Route>
                     <Route path="/">
                         <Landing/>

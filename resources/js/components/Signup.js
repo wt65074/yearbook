@@ -15,21 +15,19 @@ function SignUp() {
 
     const onSubmit = function (event) {
         event.preventDefault();
-        axios.post('register', {firstName, lastName, email, password})
+        axios.post('/register', {firstName, lastName, email, password})
             .then(res => {
                 console.log("Res: ");
                 console.log(res);
-                setRedirect(true);
+                window.location = '/home';
             })
             .catch(err => {
                 console.log("Err: ");
                 console.log(err.response);
-                setError(err.response.data.errors)
             })
     }
     return (
         <div className='flex flex-col items-center h-full justify-center w-1/2'>
-            {redirect && <Redirect to='/home'/>}
             <div className='mb-8 flex flex-col items-center'>
                 <h1 className='text-2xl font-extrabold text-grey4'>Welcome To Yearbook</h1>
                 <h1 className='text-sm text-grey4'>Sign up with your Stanford email here.</h1>
